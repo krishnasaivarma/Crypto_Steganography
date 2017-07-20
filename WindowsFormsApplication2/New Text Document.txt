@@ -1,0 +1,142 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace WindowsFormsApplication2
+{
+    
+    public partial class Form3 : Form
+    {
+            public int p, q, n, t, i, j, flag,z;
+            public int[] e, d, temp, m, en = new int[100];
+
+       public char[] msg = new char[100];
+
+       public int prime(int pr)
+      {
+
+          j = (int)Math.Sqrt(pr);
+    for (i = 2; i <= j; i++)
+    {
+        if (pr % i == 0)
+            return 0;
+    }
+    return 1;
+    }
+
+
+
+      public void mains()
+      {
+          z = 0;
+          //FIRST PRIME NUMBER
+          p = (int)numericUpDown1.Value;
+          flag = prime(p);
+          if (flag == 0)
+          {
+              MessageBox.Show("WRONG INPUT p1");
+              z = 1;
+          }
+        //  ANOTHER PRIME NUMBER
+          q = (int)numericUpDown2.Value;
+          flag = prime(q);
+          if (flag == 0 || p == q)
+          {
+              MessageBox.Show("WRONG INPUT p2");
+              z = 1;
+          }
+          if (z == 0)
+          {
+              n = p * q;
+              t = (p - 1) * (q - 1);
+
+              ce();
+             
+              richTextBox1.Text = "POSSIBLE VALUES OF e";
+              for (i = 0; i < j - 1; i++)
+              richTextBox1.Text +="\n"+e[i].ToString();
+              //    cout << e[i] << "\n";
+             
+             
+          }
+      }
+
+       public void ce()
+    {
+    int k;
+    k = 0;
+    for (i = 2; i < t; i++)
+    {
+        if (t % i == 0)
+            continue;
+        flag = prime(i);
+        if (flag == 1 && i != p && i != q)
+        {
+            e[k] = i;
+            flag = cd(e[k]);
+            if (flag > 0)
+            {
+                d[k] = flag;
+                k++;
+            }
+            if (k == 99)
+                break;
+        }
+    }
+    }
+
+       public int cd(int x)
+    {
+    int  k = 1;
+    int mnm = 1;
+    while (mnm == 1)
+    {
+        k = k + t;
+        if (k % x == 0)
+        {
+            mnm = 2;
+            return (int)(k / x);
+        }
+        else
+            return 0;
+    }
+    return 0;
+    }
+
+        public Form3()
+        {
+            InitializeComponent();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            panel1.Visible = true;
+            richTextBox1.Visible = true;
+            label8.Text = "Acceped values of E";
+            mains();
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            panel2.Visible = true;
+            label8.Text = "Acceped values of D";
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            panel3.Visible = true;
+        }
+
+        private void Form3_Load(object sender, EventArgs e)
+        {
+
+        }
+
+    }
+}
